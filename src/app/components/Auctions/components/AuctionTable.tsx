@@ -2,7 +2,7 @@ import { AuctionBroadcastData } from "@/types";
 
 export function AuctionTable(props: AuctionBroadcastData) {
   return (
-    <table>
+    <table className="">
       <thead>
         <tr>
           <th>Auction Id</th>

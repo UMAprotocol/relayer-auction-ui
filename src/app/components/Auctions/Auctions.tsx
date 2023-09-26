@@ -1,10 +1,10 @@
 import { AuctionBroadcastData } from "@/types";
 import { AuctionTable } from "./components/AuctionTable";
 
-export function Auctions(props: AuctionBroadcastData[]) {
+export function Auctions(props: { data: AuctionBroadcastData[] }) {
   return (
-    <section>
-      {props.map((auction) => (
+    <section className="w-full">
+      {props.data.map((auction) => (
         <AuctionTable key={auction.auctionId} {...auction} />
       ))}
     </section>
