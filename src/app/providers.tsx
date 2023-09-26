@@ -23,7 +23,8 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()],
 );
 
-const projectId = "YOUR_PROJECT_ID";
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
 
 const { wallets } = getDefaultWallets({
   appName: "APP_NAME",
