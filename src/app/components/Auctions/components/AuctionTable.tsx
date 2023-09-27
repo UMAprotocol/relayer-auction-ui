@@ -1,32 +1,54 @@
-import { AuctionBroadcastData } from "@/types";
+import { Auction } from "@/types";
 
-export function AuctionTable(props: AuctionBroadcastData) {
+export function AuctionTable(props: Auction) {
   return (
-    <table className="">
-      <thead>
-        <tr>
-          <th>Auction Id</th>
-          <th>Deposit Data</th>
-          <th>Bid Deadline</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{props.auctionId}</td>
-          <td>
-            recipient: {props.deposit.recipient} <br />
-            tokenAddress: {props.deposit.tokenAddress} <br />
-            amount: {props.deposit.amount} <br />
-            destinationChainId: {props.deposit.destinationChainId} <br />
-            relayerFeePct: {props.deposit.relayerFeePct} <br />
-            quoteTimestamp: {props.deposit.quoteTimestamp} <br />
-            message: {props.deposit.message} <br />
-            maxCount: {props.deposit.maxCount} <br />
-            txValue: {props.deposit.txValue}
-          </td>
-          <td>{new Date(props.bidDeadline * 1000).toLocaleDateString()}</td>
-        </tr>
-      </tbody>
-    </table>
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th colSpan={2}>
+              Auction ID: {props.auctionId} | Status: {props.status}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.bids.map((bid, index) => (
+            <tr key={index}>
+              <td>Bid</td>
+              <td>Relayer Address: {bid.relayerAddress}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Recipient</th>
+            <th>Token Address</th>
+            <th>Amount</th>
+            <th>Destination Chain Id</th>
+            <th>Relayer Fee Pct</th>
+            <th>Quote Timestamp</th>
+            <th>Message</th>
+            <th>Max Count</th>
+            <th>Tx Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{props.deposit.recipient}</td>
+            <td>{props.deposit.tokenAddress}</td>
+            <td>{props.deposit.amount}</td>
+            <td>{props.deposit.destinationChainId}</td>
+            <td>{props.deposit.relayerFeePct}%</td>
+            <td>{props.deposit.quoteTimestamp}</td>
+            <td>{props.deposit.message}</td>
+            <td>{props.deposit.maxCount}</td>
+            <td>{props.deposit.txValue}</td>
+          </tr>
+        </tbody>
+      </table>
+    </>
   );
 }
