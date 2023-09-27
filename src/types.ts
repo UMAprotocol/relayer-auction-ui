@@ -3,6 +3,7 @@ export type DepositData = {
   tokenAddress: string;
   amount: string;
   destinationChainId: string;
+  sourceChainId: string;
   relayerFeePct: string;
   quoteTimestamp: string;
   message: string;
