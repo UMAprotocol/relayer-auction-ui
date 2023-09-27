@@ -1,8 +1,32 @@
 import { Auction } from "@/types";
+import { formatUnits } from "viem";
+import { Address, useToken } from "wagmi";
+import { useChainDetails } from "../hooks/useChainDetails";
 
 export function AuctionTable(props: Auction) {
   const isComplete = props.status === "complete";
   const titleColor = isComplete ? "text-green-600" : "text-gray-500";
+  const {
+    tokenAddress,
+    amount,
+    destinationChainId,
+    sourceChainId,
+    relayerFeePct,
+    message: _message,
+    maxCount: _maxCount,
+    txValue: _txValue,
+    ...depositData
+  } = props.deposit;
+  const { data: tokenData } = useToken({ address: tokenAddress as Address });
+  const enhancedData = {
+    tokenAddress: `${tokenAddress}${tokenData ? ` (${tokenData.name})` : ""}`,
+    amount: tokenData
+      ? `${formatUnits(BigInt(amount), tokenData.decimals)} ${tokenData.symbol}`
+      : amount,
+    sourceChain: useChainDetails(sourceChainId)?.name,
+    destinationChain: useChainDetails(destinationChainId)?.name,
+    relayerFee: `${relayerFeePct}%`,
+  };
   return (
     <div>
       <h2 className="pl-5 text-2xl font-medium">
@@ -15,7 +39,25 @@ export function AuctionTable(props: Auction) {
           Deposit
         </caption>
         <tbody>
-          {Object.entries(props.deposit).map(([key, value], index) => (
+          <>
+            {Object.entries(enhancedData).map(([key, value], index) => (
+              <tr
+                key={key}
+                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+              >
+                <th
+                  scope="row"
+                  className="whitespace-nowrap py-1 font-medium text-gray-700"
+                >
+                  <strong className="px-6 py-4 font-semibold">
+                    {camelToTitleCase(key)}
+                  </strong>
+                </th>
+                <td className="px-2 py-4">{value}</td>
+              </tr>
+            ))}
+          </>
+          {Object.entries(depositData).map(([key, value], index) => (
             <tr
               key={index}
               className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
@@ -24,11 +66,9 @@ export function AuctionTable(props: Auction) {
                 scope="row"
                 className="whitespace-nowrap py-1 font-medium text-gray-700"
               >
-                <td className="px-6 py-4">
-                  <strong className="font-semibold">
-                    {camelToTitleCase(key)}
-                  </strong>
-                </td>
+                <strong className="px-6 py-4 font-semibold">
+                  {camelToTitleCase(key)}
+                </strong>
               </th>
               <td className="px-2 py-4">{value}</td>
             </tr>

@@ -2,7 +2,6 @@ import { Auction, Deposit } from "@/types";
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useAuctionsSubscription } from "./useAuctionsSubscription";
-
 export function useAuctions() {
   const [auctions, setAuctions] = useImmer<Record<string, Auction>>({});
   const { event } = useAuctionsSubscription();

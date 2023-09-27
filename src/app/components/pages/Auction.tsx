@@ -52,7 +52,9 @@ export function Auction() {
           </h1>
         ) : (
           auctionsList.map((auction) => (
-            <AuctionTable key={auction.auctionId} {...auction} />
+            <section key={auction.auctionId} className="mb-6">
+              <AuctionTable {...auction} />
+            </section>
           ))
         )}
       </>
