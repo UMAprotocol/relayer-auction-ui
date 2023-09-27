@@ -48,7 +48,7 @@ export function Auction() {
       <>
         {auctionsList.length === 0 ? (
           <h1 className="grid h-[100svh] place-items-center text-center text-6xl font-bold text-gray-900">
-            Loading...
+            Waiting for auction
           </h1>
         ) : (
           auctionsList.map((auction) => (
