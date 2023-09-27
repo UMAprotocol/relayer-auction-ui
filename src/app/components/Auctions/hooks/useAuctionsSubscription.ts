@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { AuctionEvent } from "@/types";
 import { useMemo } from "react";
 import useSWRSubscription from "swr/subscription";
@@ -11,6 +14,7 @@ export function useAuctionsSubscription() {
         next(null, JSON.parse(event.data));
       });
       socket.addEventListener("error", (event) => {
+        // @ts-expect-error TODO: fix this
         next(event.error);
       });
       return () => {
