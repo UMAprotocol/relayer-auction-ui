@@ -7,7 +7,7 @@ import useSWRSubscription from "swr/subscription";
 
 export function useAuctionsSubscription() {
   const { data, error } = useSWRSubscription(
-    "ws://46.101.170.197:2999",
+    "wss://auction-api.adams.software",
     (key, { next }) => {
       const socket = new WebSocket(key);
       socket.addEventListener("message", (event) => {
