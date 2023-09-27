@@ -10,24 +10,32 @@ export type DepositData = {
   txValue: string;
 };
 
-export type AuctionBroadcastData = {
+export type Deposit = {
+  type: "Deposit";
   auctionId: string;
   deposit: DepositData;
-  bidDeadline: number;
+  bidDeadlineMs: number;
 };
 
-export type BidData = {
+export type Bid = {
+  type: "Bid";
   auctionId: string;
   relayerAddress: string;
 };
 
-export type AuctionData = {
-  deposit: DepositData;
-  bids: Map<string, BidData>;
+export type AuctionComplete = {
+  type: "AuctionComplete";
+  auctionId: string;
+  winningRelayer: string;
 };
 
-export type DepositReturnData = {
-  recipient: string;
-  relayerFeePct: string;
-  message: string;
+export type AuctionEvent = Deposit | Bid | AuctionComplete;
+
+export type Auction = {
+  auctionId: string;
+  status: "active" | "complete";
+  deposit: DepositData;
+  bidDeadlineMs: number;
+  winningRelayer?: string;
+  bids: Bid[];
 };
