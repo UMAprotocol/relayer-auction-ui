@@ -19,6 +19,7 @@ export function useAuctions() {
       setAuctions((draft) => {
         draft[event.auctionId].bids.push(event);
       });
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (event.type === "AuctionComplete") {
       setAuctions((draft) => {
         draft[event.auctionId].status = "complete";
